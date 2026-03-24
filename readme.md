@@ -28,21 +28,29 @@ A full-featured **Helpdesk Management System** built using **Spring Boot** that 
 
 ## 📁 Project Structure
 
-src/
-├── main/
-│   ├── java/com/terracis/helpdeskmanagementapp/
-│   │   ├── controller/
-│   │   ├── service/
-│   │   ├── repo/
-│   │   ├── entity/
-│   │   ├── configuration/
-│   │   └── exception/
-│   └── resources/
-│       ├── templates/
-│       ├── static/
-│       └── application.properties
+```
+HelpdeskManagementApplication/
+├── src/
+│   ├── main/
+│   │   ├── java/com/terracis/helpdeskmanagementapp/
+│   │   │   ├── configuration/        # Security & app configuration
+│   │   │   ├── controller/           # MVC Controllers (Auth, Ticket, User, Dashboard)
+│   │   │   ├── service/              # Business logic layer
+│   │   │   ├── repo/                 # JPA repositories (database access)
+│   │   │   ├── entity/               # Entity classes (User, Ticket, etc.)
+│   │   │   ├── exception/            # Custom exceptions & handlers
+│   │   │   └── HelpdeskApplication.java  # Main Spring Boot class
+│   │   └── resources/
+│   │       ├── templates/            # Thymeleaf HTML pages
+│   │       ├── static/               # CSS, JS, static assets
+│   │       └── application.properties # App configuration
+│   └── test/
+│       └── java/...                  # Unit tests
+├── pom.xml                           # Maven dependencies
+├── mvnw / mvnw.cmd                   # Maven wrapper
+└── .gitignore
+```
 
----
 
 ## ⚙️ Setup & Run Locally
 
