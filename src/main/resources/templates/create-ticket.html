@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Create Ticket - Helpdesk</title>
+    <link rel="stylesheet" th:href="@{/MyStyle.css}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Helpdesk</h3>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/tickets/create}">Create Ticket</a>
+        <a th:href="@{/tickets/list}">View Tickets</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Navbar -->
+        <div class="navbar navbar-flex">
+            <span>Create Ticket</span>
+
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-logout">Logout</button>
+            </form>
+        </div>
+
+        <!-- Form Card -->
+        <div class="card" style="max-width: 600px;">
+
+            <form th:action="@{/tickets/create}" th:object="${ticket}" method="post">
+
+                <h2>Create New Ticket</h2>
+
+                <!-- Hardware -->
+                <div class="form-group">
+                    <label>Hardware Type</label>
+                    <select th:field="*{hardwareType.id}" required>
+                        <option value="">-- Select Hardware --</option>
+                        <option th:each="h : ${hardwareList}"
+                                th:value="${h.id}"
+                                th:text="${h.name}">
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Office -->
+                <div class="form-group">
+                    <label>Office</label>
+                    <select th:field="*{office.id}" required>
+                        <option value="">-- Select Office --</option>
+                        <option th:each="o : ${officeList}"
+                                th:value="${o.id}"
+                                th:text="${o.name}">
+                        </option>
+                    </select>
+                </div>
+
+                <!-- Vendor -->
+                <div class="form-group">
+                    <label>Vendor Name</label>
+                    <input type="text" th:field="*{vendorName}" placeholder="Enter vendor name">
+                </div>
+
+                <!-- Issue -->
+                <div class="form-group">
+                    <label>Issue Description</label>
+                    <textarea th:field="*{issueDescription}" rows="4" placeholder="Describe the issue..."></textarea>
+                </div>
+
+                <!-- Date -->
+                <div class="form-group">
+                    <label>Issue Date</label>
+                    <input type="date" th:field="*{issueDate}" required>
+                </div>
+
+                <!-- Submit -->
+                <button type="submit" class="btn">Submit Ticket</button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

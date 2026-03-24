@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Edit Ticket - Helpdesk</title>
+    <link rel="stylesheet" th:href="@{/MyStyle.css}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Helpdesk</h3>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/tickets/create}">Create Ticket</a>
+        <a th:href="@{/tickets/list}">View Tickets</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Navbar -->
+        <div class="navbar navbar-flex">
+
+            <div style="display:flex; gap:10px; align-items:center;">
+                <a th:href="@{/tickets/list}" 
+                   class="btn" 
+                   style="padding:6px 12px; font-size:14px;">
+                    ← Back to Tickets
+                </a>
+
+                <span style="font-weight:500;">Edit Ticket</span>
+            </div>
+
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-logout">Logout</button>
+            </form>
+
+        </div>
+
+        <!-- Form Card -->
+        <div class="card" style="max-width:500px; margin:auto;">
+
+            <h2 style="text-align:center; margin-bottom:15px;">Edit Ticket</h2>
+
+            <!-- ✅ SUCCESS MESSAGE -->
+            <div th:if="${successMessage}" class="alert alert-success">
+                <span th:text="${successMessage}"></span>
+            </div>
+
+            <!-- ❌ ERROR / RESTRICTION MESSAGE -->
+            <div th:if="${errorMessage}" class="alert alert-danger">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <form th:action="@{/tickets/update}" th:object="${ticket}" method="post">
+
+                <!-- Hidden ID -->
+                <input type="hidden" th:field="*{id}" />
+
+                <!-- Ticket Number -->
+                <div class="form-group">
+                    <label>Ticket Number</label>
+                    <input type="text" th:value="*{ticketNumber}" readonly />
+                </div>
+
+                <!-- Status -->
+                <div class="form-group">
+                    <label>Status</label>
+                    <select th:field="*{status.id}" 
+                            style="width:100%; padding:10px; border-radius:10px;">
+                        <option value="1">OPEN</option>
+                        <option value="2">IN_PROGRESS</option>
+                        <option value="3">RESOLVED</option>
+                    </select>
+                </div>
+
+                <!-- Buttons -->
+                <div style="margin-top:20px; display:flex; gap:10px;">
+
+                    <button type="submit" class="btn">
+                        Update
+                    </button>
+
+                    <a th:href="@{/tickets/list}" 
+                       class="btn btn-logout"
+                       style="text-align:center; padding:10px;">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

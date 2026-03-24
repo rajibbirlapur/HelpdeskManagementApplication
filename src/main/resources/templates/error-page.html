@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error - Helpdesk</title>
+    <link rel="stylesheet" th:href="@{/MyStyle.css}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Helpdesk</h3>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/tickets/create}">Create Ticket</a>
+        <a th:href="@{/tickets/list}">View Tickets</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Navbar -->
+        <div class="navbar navbar-flex">
+            <span>Error Page</span>
+
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-logout">Logout</button>
+            </form>
+        </div>
+
+        <!-- Error Card -->
+        <div class="card" style="max-width:500px; margin:auto; text-align:center;">
+
+            <h2 style="color:#e74c3c; margin-bottom:15px;">
+                ⚠️ Something went wrong
+            </h2>
+
+            <!-- Dynamic Error Message -->
+            <div th:if="${errorMessage}" class="alert alert-danger">
+                <span th:text="${errorMessage}"></span>
+            </div>
+
+            <!-- Fallback Message -->
+            <p th:if="${errorMessage == null}">
+                Unexpected error occurred. Please try again.
+            </p>
+
+            <!-- Buttons -->
+            <div style="margin-top:20px; display:flex; justify-content:center; gap:10px;">
+
+                <a href="/dashboard" class="btn">
+                    Go to Dashboard
+                </a>
+
+                <a href="/tickets/list" class="btn btn-logout">
+                    View Tickets
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Manage Users</title>
+    <link rel="stylesheet" th:href="@{/MyStyle.css}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <div class="main-content">
+
+        <h2>All Users</h2>
+        
+        <!-- ✅ SUCCESS -->
+        <div th:if="${successMessage}" class="alert alert-success">
+            <span th:text="${successMessage}"></span>
+        </div>
+
+        <!-- ❌ ERROR -->
+        <div th:if="${errorMessage}" class="alert alert-danger">
+            <span th:text="${errorMessage}"></span>
+        </div>
+
+        <br>
+
+        <!-- 🔍 SEARCH + FILTER -->
+        <form th:action="@{/admin/users}" method="get" 
+              style="display:flex; gap:10px; margin-bottom:15px;">
+
+            <input type="text" name="keyword"
+                   placeholder="Search username..."
+                   th:value="${keyword}"
+                   class="input-field"/>
+
+            <select name="role" class="input-field">
+                <option value="">All Roles</option>
+                <option value="USER" th:selected="${role == 'USER'}">USER</option>
+                <option value="ADMIN" th:selected="${role == 'ADMIN'}">ADMIN</option>
+            </select>
+
+            <button type="submit" class="btn">Search</button>
+
+        </form>
+
+        <!-- ACTION BUTTONS -->
+        <a href="/admin/users/create" class="btn">Create User</a>
+        <a href="/dashboard" class="btn">Dashboard</a>
+
+        <br><br>
+
+        <!-- TABLE -->
+        <table border="1">
+            <tr>
+                <th>Username</th>
+                <th>Role</th>
+                <th>Actions</th>
+            </tr>
+
+            <tr th:each="u : ${users}">
+                <td th:text="${u.username}"></td>
+                <td th:text="${u.role}"></td>
+
+                <td>
+                    <a th:href="@{/admin/users/edit/{id}(id=${u.id})}" class="btn">Edit</a>
+
+                    <a th:href="@{/admin/users/delete/{id}(id=${u.id})}"
+                       th:if="${u.username != #authentication.name and u.role != 'ADMIN'}"
+                       onclick="return confirm('Delete user?')"
+                       class="btn btn-danger">
+                       Delete
+                    </a>
+                </td>
+            </tr>
+        </table>
+
+        <!-- 📄 PAGINATION -->
+        <div style="margin-top:15px; text-align:center;">
+
+            <!-- PREV -->
+            <a th:if="${currentPage > 0}"
+               th:href="@{/admin/users(page=${currentPage - 1}, keyword=${keyword}, role=${role})}"
+               class="btn">
+               Prev
+            </a>
+
+            <!-- PAGE INFO -->
+            <span>
+                Page [[${currentPage + 1}]] of [[${totalPages}]]
+            </span>
+
+            <!-- NEXT -->
+            <a th:if="${currentPage < totalPages - 1}"
+               th:href="@{/admin/users(page=${currentPage + 1}, keyword=${keyword}, role=${role})}"
+               class="btn">
+               Next
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard - Helpdesk</title>
+    <link rel="stylesheet" th:href="@{/MyStyle.css}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Helpdesk</h3>
+
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/tickets/create}">Create Ticket</a>
+        <a th:href="@{/tickets/list}">View Tickets</a>
+        
+        <!-- ✅ ADMIN ONLY (handles both ADMIN & ROLE_ADMIN) -->
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+           th:href="@{/admin/users}">
+           Manage Users
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Navbar -->
+        <div class="navbar navbar-flex">
+            
+            <span>
+                Welcome, <strong th:text="${username}"></strong> 👋
+            </span>
+
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-logout">Logout</button>
+            </form>
+
+        </div>
+
+        <!-- Success Message -->
+        <div th:if="${successMessage}" class="alert alert-success">
+            <p th:text="${successMessage}"></p>
+        </div>
+
+        <!-- Stats -->
+        <h3>Ticket Statistics</h3>
+
+        <div class="dashboard-cards">
+
+            <div class="dashboard-card">
+                <h4>Total Tickets</h4>
+                <p th:text="${totalTickets}"></p>
+            </div>
+
+            <div class="dashboard-card">
+                <h4>Open</h4>
+                <p th:text="${openTickets}"></p>
+            </div>
+
+            <div class="dashboard-card">
+                <h4>In Progress</h4>
+                <p th:text="${inProgressTickets}"></p>
+            </div>
+
+            <div class="dashboard-card">
+                <h4>Resolved</h4>
+                <p th:text="${resolvedTickets}"></p>
+            </div>
+
+        </div>
+
+        <!-- Actions -->
+        <h3 style="margin-top: 25px;">Quick Actions</h3>
+
+        <div class="dashboard-cards">
+
+            <div class="dashboard-card">
+                <h4>Create Ticket</h4>
+                <a th:href="@{/tickets/create}" class="btn">Go</a>
+            </div>
+
+            <div class="dashboard-card">
+                <h4>View Tickets</h4>
+                <a th:href="@{/tickets/list}" class="btn">Go</a>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
