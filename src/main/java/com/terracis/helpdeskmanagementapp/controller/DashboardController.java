@@ -21,7 +21,7 @@ public class DashboardController
 		model.addAttribute("username" , username);
 		
 		model.addAttribute("totalTickets", ticketRepo.count());
-		model.addAttribute("openTickets", ticketRepo.countByStatusName("Open"));
+		model.addAttribute("openTickets", ticketRepo.countByStatusName("OPEN"));
 		model.addAttribute("inProgressTickets", ticketRepo.countByStatusName("IN_PROGRESS"));
 		model.addAttribute("resolvedTickets", ticketRepo.countByStatusName("RESOLVED"));
 		
