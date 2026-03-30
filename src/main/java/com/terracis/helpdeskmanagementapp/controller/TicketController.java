@@ -141,4 +141,20 @@ public class TicketController
 		
 		return "redirect:/tickets/list";
 	}
+	
+	// show resolved tickets
+	@GetMapping("/resolvedTickets")
+	public String viewResolvedTickets(@RequestParam(defaultValue = "0") int page,
+			                          @RequestParam(defaultValue = "5") int size,
+			                          Model model)
+	{
+		Page<Ticket> ticketPage = ticketService.getResolvedTickets(page, size);
+		
+		model.addAttribute("ticketPage", ticketPage);
+		model.addAttribute("currentPage", page);
+		model.addAttribute("totalPages", ticketPage.getTotalPages());
+		
+		return "resolved-tickets";
+	}
 }
+
