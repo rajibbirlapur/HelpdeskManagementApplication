@@ -15,6 +15,13 @@
         <a th:href="@{/dashboard}">Dashboard</a>
         <a th:href="@{/tickets/create}">Create Ticket</a>
         <a th:href="@{/tickets/list}">View Tickets</a>
+        <a th:href="@{/tickets/resolvedTickets}"> Resolved Tickets</a>
+        
+        <!-- ✅ ADMIN ONLY (handles both ADMIN & ROLE_ADMIN) -->
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+           th:href="@{/admin/users}">
+           Manage Users
+        </a>
     </div>
 
     <!-- Main Content -->
@@ -81,9 +88,11 @@
                     <thead style="background:#f1f1f1;">
                         <tr>
                             <th style="padding:10px; text-align:left;">Ticket No</th>
-                            <th style="padding:10px; text-align:left;">Hardware</th>
                             <th style="padding:10px; text-align:left;">Office</th>
+                             <th style="padding:10px; text-align:left;">Hardware</th>
+                              <th style="padding:10px; text-align:left;">Model No</th>
                             <th style="padding:10px; text-align:left;">Vendor</th>
+                             <th style="padding:10px; text-align:left;">Case Id</th>
                             <th style="padding:10px; text-align:left;">Status</th>
                             <th style="padding:10px; text-align:left;">Created By</th>
                             <th style="padding:10px; text-align:left;">Issue Date</th>
@@ -96,9 +105,11 @@
                             style="border-top:1px solid #ddd;">
 
                             <td style="padding:10px;" th:text="${t.ticketNumber}"></td>
-                            <td style="padding:10px;" th:text="${t.hardwareType.name}"></td>
                             <td style="padding:10px; white-space:nowrap;" th:text="${t.office.name}"></td>
+                            <td style="padding:10px;" th:text="${t.hardwareType.name}"></td>
+                            <td style="padding:10px;" th:text="${t.modelNo}"></td>
                             <td style="padding:10px;" th:text="${t.vendorName}"></td>
+                            <td style="padding:10px;" th:text="${t.caseId}"></td>
                             <td style="padding:10px;" th:text="${t.status != null ? t.status.name : 'N/A'}"></td>
                             <td style="padding:10px;" th:text="${t.createdBy.username}"></td>
                             <td style="padding:10px;" th:text="${t.issueDate}"></td>
