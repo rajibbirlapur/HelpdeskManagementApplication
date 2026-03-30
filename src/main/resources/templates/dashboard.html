@@ -16,6 +16,7 @@
         <a th:href="@{/dashboard}">Dashboard</a>
         <a th:href="@{/tickets/create}">Create Ticket</a>
         <a th:href="@{/tickets/list}">View Tickets</a>
+        <a th:href="@{/tickets/resolvedTickets}"> Resolved Tickets</a>
         
         <!-- ✅ ADMIN ONLY (handles both ADMIN & ROLE_ADMIN) -->
         <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
@@ -87,6 +88,11 @@
                 <a th:href="@{/tickets/list}" class="btn">Go</a>
             </div>
 
+            <div class="dashboard-card">
+                <h4>Resolved Ticket</h4>
+                <a th:href="@{/tickets/resolvedTickets}" class="btn">Go</a>
+            </div>
+            
         </div>
 
     </div>
