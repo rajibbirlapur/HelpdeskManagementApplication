@@ -30,4 +30,7 @@ public interface TicketRepository extends JpaRepository<Ticket, Long>
 		                         @Param("status") String status,
 		                         Pageable pageable);
 	
+	Page<Ticket> findTicketByStatus_Name(String name, Pageable pageable);
+	
 }
+
