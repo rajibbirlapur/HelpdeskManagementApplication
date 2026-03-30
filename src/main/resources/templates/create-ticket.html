@@ -15,6 +15,13 @@
         <a th:href="@{/dashboard}">Dashboard</a>
         <a th:href="@{/tickets/create}">Create Ticket</a>
         <a th:href="@{/tickets/list}">View Tickets</a>
+        <a th:href="@{/tickets/resolvedTickets}"> Resolved Tickets</a>
+        
+         <!-- ✅ ADMIN ONLY (handles both ADMIN & ROLE_ADMIN) -->
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+           th:href="@{/admin/users}">
+           Manage Users
+        </a>
     </div>
 
     <!-- Main Content -->
@@ -70,6 +77,18 @@
                 <div class="form-group">
                     <label>Issue Description</label>
                     <textarea th:field="*{issueDescription}" rows="4" placeholder="Describe the issue..."></textarea>
+                </div>
+                
+                <!-- Case id -->
+                <div class="form-group">
+                <label>Case Id </label>
+                <input type="text" th:field="*{caseId}" placeholder="Enter Case ID from Vendor">
+                </div>
+                
+                <!-- Model -->
+                <div class="form-group">
+                <label> Hardware Model </label>
+                <input type="text" th:field="*{modelNo}" placeholder="Enter the Hardware Model">
                 </div>
 
                 <!-- Date -->
