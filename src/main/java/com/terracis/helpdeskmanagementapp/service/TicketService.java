@@ -4,7 +4,9 @@ import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.terracis.helpdeskmanagementapp.entity.Ticket;
@@ -115,5 +117,12 @@ public class TicketService
 		
 		ticketRepository.delete(ticket);
 		return true;
+	}
+	
+	// show resolved Ticket
+	public Page<Ticket> getResolvedTickets(int page, int size)
+	{
+		Pageable pageable = PageRequest.of(page, size, Sort.by("issueDate").descending());
+		return ticketRepository.findTicketByStatus_Name("RESOLVED", pageable);
 	}
 }
