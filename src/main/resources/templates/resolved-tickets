@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resolved Tickets - Helpdesk</title>
+    <link rel="stylesheet" th:href="@{/MyStyle.css}">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h3>Helpdesk</h3>
+        <a th:href="@{/dashboard}">Dashboard</a>
+        <a th:href="@{/tickets/create}">Create Ticket</a>
+        <a th:href="@{/tickets/list}">View Tickets</a>
+        <a th:href="@{/tickets/resolvedTickets}"> Resolved Tickets</a>
+        
+         <!-- ✅ ADMIN ONLY (handles both ADMIN & ROLE_ADMIN) -->
+        <a th:if="${#authorization.expression('hasRole(''ADMIN'')')}"
+           th:href="@{/admin/users}">
+           Manage Users
+        </a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+
+        <!-- Navbar -->
+        <div class="navbar navbar-flex">
+
+            <div style="display:flex; align-items:center; gap:12px;">
+                <a th:href="@{/dashboard}" 
+                   class="btn" 
+                   style="padding:6px 12px; font-size:14px;">
+                    ← Back to Dashboard
+                </a>
+
+                <span style="font-weight:500;">Resolved Tickets</span>
+            </div>
+
+            <form th:action="@{/logout}" method="post">
+                <button class="btn btn-logout">Logout</button>
+            </form>
+
+        </div>
+
+        <!-- Table Card -->
+        <div class="card" style="width:100%; padding:20px;">
+
+            <h2 style="margin-bottom:15px;">Resolved Ticket List</h2>
+
+            <!-- Table -->
+            <div class="table-container" style="overflow-x:auto;">
+
+                <table class="custom-table" 
+                       style="width:100%; border-collapse:collapse; min-width:1000px;">
+
+                    <thead style="background:#f1f1f1;">
+                        <tr>
+                            <th style="padding:10px; text-align:left;">Ticket No</th>
+                            <th style="padding:10px; text-align:left;">Office</th>
+                            <th style="padding:10px; text-align:left;">Hardware</th>
+                            <th style="padding:10px; text-align:left;">Model No</th>
+                            <th style="padding:10px; text-align:left;">Vendor</th>
+                            <th style="padding:10px; text-align:left;">Case Id</th>
+                            <th style="padding:10px; text-align:left;">Status</th>
+                            <th style="padding:10px; text-align:left;">Created By</th>
+                            <th style="padding:10px; text-align:left;">Issue Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <!-- Data -->
+                        <tr th:each="t : ${ticketPage.content}" 
+                            style="border-top:1px solid #ddd;">
+
+                            <td style="padding:10px;" th:text="${t.ticketNumber}"></td>
+                            <td style="padding:10px;" th:text="${t.office.name}"></td>
+                            <td style="padding:10px;" th:text="${t.hardwareType.name}"></td>
+                            <td style="padding:10px;" th:text="${t.modelNo}"></td>
+                            <td style="padding:10px;" th:text="${t.vendorName}"></td>
+                            <td style="padding:10px;" th:text="${t.caseId}"></td>
+                            <td style="padding:10px;" th:text="${t.status != null ? t.status.name : 'N/A'}"></td>
+                            <td style="padding:10px;" th:text="${t.createdBy.username}"></td>
+                            <td style="padding:10px;" th:text="${t.issueDate}"></td>
+
+                        </tr>
+
+                        <!-- Empty -->
+                        <tr th:if="${#lists.isEmpty(ticketPage.content)}">
+                            <td colspan="9" style="text-align:center; padding:15px;">
+                                No resolved tickets found
+                            </td>
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+            <!-- Pagination -->
+            <div style="margin-top:20px; text-align:center;">
+
+                <!-- Previous -->
+                <a th:if="${currentPage > 0}"
+                   th:href="@{/tickets/resolvedTickets(page=${currentPage - 1})}"
+                   class="btn small-btn"
+                   style="margin-right:10px;">
+                    ← Previous
+                </a>
+
+                <!-- Page Info -->
+                <span style="font-weight:500;">
+                    Page <span th:text="${currentPage + 1}"></span> 
+                    of <span th:text="${totalPages}"></span>
+                </span>
+
+                <!-- Next -->
+                <a th:if="${currentPage < totalPages - 1}"
+                   th:href="@{/tickets/resolvedTickets(page=${currentPage + 1})}"
+                   class="btn small-btn"
+                   style="margin-left:10px;">
+                    Next →
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
