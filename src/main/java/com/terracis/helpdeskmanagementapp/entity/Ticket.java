@@ -43,5 +43,8 @@ public class Ticket
 	private User createdBy;
 	
 	private LocalDateTime createdAt = LocalDateTime.now();
+	private String caseId;
+	private String modelNo;
 
 }
+
